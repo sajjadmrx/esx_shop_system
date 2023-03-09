@@ -8,6 +8,7 @@ CreateThread(function()
                 ESX.HideUI()
                 ESX.ShowNotification("Shop")
                 TriggerNUIEvent(EventNames.OPEN_MENU)
+                SetNuiFocus(true, true)
             end
         end
         local playerCoords = GetEntityCoords(PlayerPedId())
