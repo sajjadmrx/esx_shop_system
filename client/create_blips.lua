@@ -10,7 +10,7 @@ CreateThread(function()
                 SetBlipAsShortRange(blip, true)
 
                 BeginTextCommandSetBlipName("STRING")
-                AddTextComponentSubstringPlayerName("shopsTest")
+                AddTextComponentSubstringPlayerName("shop")
                 EndTextCommandSetBlipName(blip)
             end
         end

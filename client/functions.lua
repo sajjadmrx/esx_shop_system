@@ -1,3 +1,3 @@
-function TriggerNUIEvent(eventName)
-    SendNUIMessage(json.encode({ eventName = eventName }))
+function TriggerNUIEvent(eventName, item)
+    SendNUIMessage(json.encode({ eventName = eventName, item }))
 end

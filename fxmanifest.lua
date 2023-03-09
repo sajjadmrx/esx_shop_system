@@ -25,6 +25,7 @@ ui_page('html/build/index.html')
 files({
     'html/build/index.html',
     'html/build/static/js/*.js',
+    'html/build/static/css/*.css',
 })
 
 dependency 'es_extended'

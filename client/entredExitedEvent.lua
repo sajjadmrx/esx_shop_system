@@ -7,5 +7,5 @@ end)
 
 AddEventHandler("esx_shop_system:hasExitedMarker", function(zone)
     currentAction = nil
-    --todo  hide UI
+    TriggerNUIEvent(EventNames.HideAll)
 end)
