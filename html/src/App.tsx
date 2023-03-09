@@ -1,10 +1,12 @@
 import React, { useEffect } from 'react';
 import './App.css';
+import { messageHandler } from './handlers/message.handler';
 
 function App() {
-  useEffect(() => { console.log("Fetching Products...") }, [])
+  useEffect(() => { messageHandler() }, [])
   return (
     <div className="App" style={{ display: "none" }}>
+
       Test
     </div>
   );

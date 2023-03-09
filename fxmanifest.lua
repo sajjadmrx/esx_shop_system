@@ -20,11 +20,11 @@ server_script({
     'server/*.lua'
 })
 
-ui_page('client/ui/build/index.html')
+ui_page('html/build/index.html')
 
 files({
-    'client/ui/build/index.html',
-    'client/ui/build/static/js/*.js',
+    'html/build/index.html',
+    'html/build/static/js/*.js',
 })
 
 dependency 'es_extended'
