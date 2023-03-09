@@ -1,13 +1,17 @@
 import React, { useEffect } from 'react';
 import './App.css';
-import { messageHandler } from './handlers/message.handler';
+
+
+import { MenusComponents } from './components/menus';
+import { currentActionContext } from './contexts/action.context';
 
 function App() {
-  useEffect(() => { messageHandler() }, [])
+  const [currentAction, setCurrentAction] = React.useState<string | null>(null)
   return (
-    <div className="App" style={{ display: "none" }}>
-
-      Test
+    <div>
+      <currentActionContext.Provider value={{ currentAction, setCurrentAction }}>
+        <MenusComponents />
+      </currentActionContext.Provider>
     </div>
   );
 }
