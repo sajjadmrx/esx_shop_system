@@ -9,6 +9,8 @@ lua54 'yes'
 shared_script '@es_extended/imports.lua'
 
 client_scripts({
+    'config.lua',
+    'client/*.lua'
 })
 
 server_script({
