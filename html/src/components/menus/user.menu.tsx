@@ -8,6 +8,7 @@ import { MdShoppingCartCheckout, MdAddShoppingCart } from 'react-icons/md'
 import { MdOutlineRemoveShoppingCart } from 'react-icons/md'
 import { ProductsComponent } from '../products/products';
 import { Cart } from '../cart/cart';
+import { cartContext } from '../../contexts/cart.context';
 
 interface Props {
     closed: boolean
@@ -26,23 +27,25 @@ export function UserMenuComponent(props: Props) {
 
     return (
         <div hidden={!isShow}>
-            <div className='overflow-auto'>
-                <ProductsComponent cart={cart} setCart={setCart} />
-            </div>
-            <div className='mt-2 border border-gray-600 rounded-md border-dashed'>
-                <Cart cart={cart} setCart={setCart} />
-            </div>
-            <div className='mt-2'>
-                <h1 className='text-xl text-white'>Total Products: <strong className='text-red-400'>{cart.length}</strong></h1>
-                <h1 className='text-xl text-white'>Total Price: <strong className='text-green-300'>${calculateTotalPrice(cart).toLocaleString()}</strong></h1>
-
-                <div className='mt-2'>
-                    <Button className='bg-green-800 text-white border-0 hover:bg-green-600' >
-                        <MdShoppingCartCheckout className='mr-2' />
-                        Buy
-                    </Button>
+            <cartContext.Provider value={{ cart, setCart }}>
+                <div className='overflow-auto'>
+                    <ProductsComponent />
                 </div>
-            </div>
+                <div className='mt-2 border border-gray-700 rounded-md border-dashed'>
+                    <Cart />
+                </div>
+                <div className='mt-2'>
+                    <h1 className='text-xl text-white font-[Roboto]'>Total Products: <strong className='text-red-400'>{cart.length}</strong></h1>
+                    <h1 className='text-xl text-white font-[Roboto]'>Total Price: <strong className='text-green-300'>${Number(calculateTotalPrice(cart).toFixed()).toLocaleString()}</strong></h1>
+
+                    <div className='mt-2'>
+                        <Button className='bg-green-800 text-white border-0 hover:bg-green-600' >
+                            <MdShoppingCartCheckout className='mr-2' />
+                            Buy
+                        </Button>
+                    </div>
+                </div>
+            </cartContext.Provider>
         </div>
     )
 }
