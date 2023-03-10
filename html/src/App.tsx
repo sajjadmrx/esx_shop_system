@@ -11,9 +11,9 @@ function App() {
   const [currentAction, setCurrentAction] = React.useState<string | null>(EventsName.OPEN_MENU)
   useEffect(() => {
     if (currentAction == null) {
-      fetch("https://shop_system/close", { method: "POST" })
-        .then(() => console.log("done"))
-        .catch(console.log)
+      // fetch("https://shop_system/close", { method: "POST" })
+      //   .then(() => console.log("done"))
+      //   .catch(console.log)
     }
   }, [currentAction])
   return (

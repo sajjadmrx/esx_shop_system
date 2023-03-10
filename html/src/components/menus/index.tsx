@@ -43,9 +43,3 @@ export function MenusComponents() {
         </div >
     )
 }
-
-/*
-    position: relative;
-    top: -111px;
-    left: 594px;
-    */

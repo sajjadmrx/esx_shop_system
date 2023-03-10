@@ -8,12 +8,16 @@ export function messageHandler(cuurentActionContext: CurrentActionContext) {
 
     function handleMessage(event: any) {
         if (event.data && typeof event.data == "string") {
-            const data: EventData = JSON.parse(event.data)
-            switch (data.eventName) {
-                case EventsName.OPEN_MENU: cuurentActionContext.setCurrentAction(EventsName.OPEN_MENU)
-                    break;
-                case EventsName.HIDE_ALL: cuurentActionContext.setCurrentAction(null)
-                    break;
+            try {
+                const data: EventData = JSON.parse(event.data)
+                switch (data.eventName) {
+                    case EventsName.OPEN_MENU: cuurentActionContext.setCurrentAction(EventsName.OPEN_MENU)
+                        break;
+                    case EventsName.HIDE_ALL: cuurentActionContext.setCurrentAction(null)
+                        break;
+                }
+            } catch (error) {
+
             }
         }
     }

@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS `shop_items` (
   `label` varchar(50) NOT NULL,
   `weight` int NOT NULL DEFAULT '1',
   `price` decimal(20,6) NOT NULL,
-  `offer` tinyint DEFAULT '99',
+  `offer` tinyint DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `key` (`key`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
