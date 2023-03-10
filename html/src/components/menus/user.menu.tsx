@@ -4,11 +4,14 @@ import { currentActionContext } from '../../contexts/action.context';
 import { EventsName } from '../../constants/eventsName';
 import { Input, Button, Card, Badge, Avatar } from 'react-daisyui';
 import { useEffect } from 'react';
+import { MdShoppingCartCheckout, MdAddShoppingCart } from 'react-icons/md'
+import { MdOutlineRemoveShoppingCart } from 'react-icons/md'
+
 const products = [
     {
         name: "noshabeh",
         icon: "https://cdn0.iconfinder.com/data/icons/beverage-element-pack-1/512/can-packaging-04c-512.png",
-        price: 500
+        price: 500,
     },
     {
         name: "pizaa",
@@ -153,7 +156,10 @@ export function UserMenuComponent(props: Props) {
                                         <input type='number' className='w-10 rounded-sm bg-gray-800 text-white text-center' min="1" max="5" defaultValue={1} required
                                             onChange={(ta) => item.number = Number(ta.target.value) || 1}
                                         ></input>
-                                        <Button className='bg-green-600 hover:bg-green-800 border-0 text-white' size='xs' onClick={() => addToCart(item)}>Add To Card</Button>
+                                        <Button className='bg-green-600 hover:bg-green-800 border-0 text-white' size='xs' onClick={() => addToCart(item)}>
+                                            <MdAddShoppingCart className="mr-2" />
+                                            Add To Card
+                                        </Button>
                                     </Card.Actions>
                                 </Card.Body>
                             </Card>
@@ -163,10 +169,10 @@ export function UserMenuComponent(props: Props) {
 
             </div>
             <div className='mt-2 border border-gray-600 rounded-md border-dashed'>
-                <p className='text-white text-lg'>🛒 Your Card:</p>
+                <p className='text-white text-lg'>🛒 Your Cart:</p>
                 <div className='flex justify-center gap-5 h-32 p-1 px-4 rounded-lg overflow-x-auto'>
                     {
-                        !cart.length && <Avatar size={'md'} src="https://img.icons8.com/external-flaticons-lineal-color-flat-icons/256/external-cart-web-flaticons-lineal-color-flat-icons-3.png" />
+                        !cart.length && <MdOutlineRemoveShoppingCart size={100} className='text-gray-500' />
                     }
                     {cart.map((item: any, index: any) => {
                         return (
@@ -192,7 +198,11 @@ export function UserMenuComponent(props: Props) {
                 <h1 className='text-xl text-white'>Total Price: <strong className='text-green-300'>${calculateTotalPrice(cart).toLocaleString()}</strong></h1>
 
                 <div className='mt-2'>
-                    <Button className='bg-green-800 text-white border-0 hover:bg-green-600' >Buy</Button>
+                    <Button className='bg-green-800 text-white border-0 hover:bg-green-600' >
+                        <MdShoppingCartCheckout className='mr-2' />
+
+                        Buy
+                    </Button>
                 </div>
             </div>
 
@@ -201,5 +211,15 @@ export function UserMenuComponent(props: Props) {
 }
 
 function calculateTotalPrice(card: any[]): number {
-    return card.reduce((totalPrice, product) => totalPrice + product.price * product.total, 0)
+    let totalPrice: number = 0;
+    for (let i = 0; i < card.length; i++) {
+        let product = card[i];
+        let price = product.price;
+        if (product.total) {
+            price *= product.total;
+        }
+        let discount = (product.offer || 0) / 100;
+        totalPrice += price - price * discount;
+    }
+    return totalPrice;
 }
