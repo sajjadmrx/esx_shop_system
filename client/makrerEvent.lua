@@ -7,7 +7,7 @@ CreateThread(function()
                 currentAction = nil;
                 ESX.HideUI()
                 SetNuiFocus(true, true)
-                TriggerNUIEvent(EventNames.OPEN_ADMIN_MENU)
+                TriggerNUIEvent(EventNUiNames.OPEN_ADMIN_MENU)
             end
         end
         local playerCoords = GetEntityCoords(PlayerPedId())

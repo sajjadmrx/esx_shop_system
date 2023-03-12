@@ -7,5 +7,5 @@ end)
 
 AddEventHandler("esx_shop_system:hasExitedMarker", function(zone)
     currentAction = nil
-    TriggerNUIEvent(EventNames.HideAll)
+    TriggerNUIEvent(EventNUiNames.HideAll)
 end)
