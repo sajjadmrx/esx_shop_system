@@ -7,14 +7,13 @@ interface Prop {
 export function ProductComponent(prop: Prop) {
     const item = prop.item
     return (
-        <Card bordered={true} className='border-[#84818169] rounded-lg'>
+        <Card bordered={true} className='border-[#84818169] '>
             <Card.Image
                 src={item.icon}
-                alt="Shoes"
                 width={100}
                 className='mt-2'
             />
-            <Card.Body className="mt-1 items-center text-center bg-[#e9e9e92e] bg-opacity-40 rounded-lg">
+            <Card.Body className="mt-1 items-center text-center bg-opacity-40 rounded-b-xl bg-[#e9e9e92e] ">
                 <Card.Title>
                     <p className="text-ellipsis overflow-hidden text-sm w-24 leading-4 text-white ">
                         {item.name}

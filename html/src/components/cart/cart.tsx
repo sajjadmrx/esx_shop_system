@@ -13,7 +13,7 @@ export function Cart() {
             <p className='text-white text-lg'>🛒 Your Cart:</p>
             <div className='flex justify-center gap-5 h-32 p-1 px-4 rounded-lg overflow-x-auto'>
                 {
-                    !cart.length && <MdOutlineRemoveShoppingCart size={100} className='text-gray-800' />
+                    !cart.length && <MdOutlineRemoveShoppingCart size={100} className='text-yellow-100' />
                 }
                 {cart.map((item: any, index: any) => {
                     return (

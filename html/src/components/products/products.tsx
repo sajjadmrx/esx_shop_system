@@ -119,7 +119,7 @@ export function ProductsComponent() {
     }
 
     return (
-        <div className='grid grid-cols-4 gap-4 justify-center h-80 p-1 rounded-lg'>
+        <div className='grid grid-cols-4 gap-4 justify-center h-80 p-1 '>
             {products.map((item: any, index: any) => {
                 return (
                     <ProductComponent key={index} item={item} onAdd={() => addToCart(item)} />

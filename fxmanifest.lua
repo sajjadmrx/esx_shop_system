@@ -23,9 +23,9 @@ server_script({
 ui_page('html/build/index.html')
 
 files({
+    'html/fonts/*',
     'html/build/index.html',
     'html/build/static/js/*.js',
-    'html/fonts/*.ttf',
     'html/build/static/css/*.css',
 })
 

@@ -7,14 +7,18 @@ import { currentActionContext } from './contexts/action.context';
 import { EventsName } from './constants/eventsName';
 
 
+
 function App() {
-  const [currentAction, setCurrentAction] = React.useState<string | null>(EventsName.OPEN_MENU)
+  const [currentAction, setCurrentAction] = React.useState<string | null>(EventsName.OPEN_ADMIN_MENU)
   useEffect(() => {
-    if (currentAction == null) {
-      fetch("https://shop_system/close", { method: "POST" })
-        .then(() => console.log("done"))
-        .catch(console.log)
+    async function close() {
+      await fetch("https://shop_system/close", { method: "POST" })
+
     }
+    if (currentAction == null)
+      close()
+
+
   }, [currentAction])
   return (
     <div hidden={currentAction == null}>

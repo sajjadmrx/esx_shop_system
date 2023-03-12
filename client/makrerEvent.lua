@@ -6,9 +6,8 @@ CreateThread(function()
             if IsControlJustReleased(0, 38) and currentAction == 'shop_menu' then
                 currentAction = nil;
                 ESX.HideUI()
-                ESX.ShowNotification("Shop")
-                TriggerNUIEvent(EventNames.OPEN_MENU)
                 SetNuiFocus(true, true)
+                TriggerNUIEvent(EventNames.OPEN_ADMIN_MENU)
             end
         end
         local playerCoords = GetEntityCoords(PlayerPedId())

@@ -12,7 +12,7 @@ module.exports = {
     styled: true,
     base: true,
     utils: true,
-    themes: [],
+    themes: ["light"],
   },
   plugins: [require("daisyui")],
 }
