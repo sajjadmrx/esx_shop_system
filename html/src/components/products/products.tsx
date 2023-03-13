@@ -3,116 +3,47 @@ import { Card, Button } from 'react-daisyui';
 import { MdAddShoppingCart } from 'react-icons/md';
 import { ProductComponent } from './product.component';
 import { cartContext } from '../../contexts/cart.context';
-import { CartContext } from '../../interfaces/contexts.interface';
+import { CartContext, CurrentActionContext } from '../../interfaces/contexts.interface';
+import { Product, ProductInCart } from '../../interfaces/product.interface';
+import { currentActionContext } from '../../contexts/action.context';
 
 
-const products = [
+const products2: Product[] = [
     {
-        name: "noshabeh",
-        icon: "https://cdn0.iconfinder.com/data/icons/beverage-element-pack-1/512/can-packaging-04c-512.png",
+        id: 1,
+        label: "water",
+        key: "water",
         price: 500,
-        offer: 40
+        offer: 40,
+        weight: 1
     },
     {
-        name: "pizaa",
-        icon: "https://cdn-icons-png.flaticon.com/512/3595/3595458.png",
+        id: 2,
+        label: "pizza",
+        key: "pizza",
         price: 450,
-        offer: 0
-    },
-    {
-        name: "phone",
-        icon: "https://www.freepnglogos.com/uploads/mobile-png/device-mobile-phone-icon-small-flat-iconset-paomedia-20.png",
-        price: 7000
-    },
-    {
-        name: "map",
-        icon: "https://cdn-icons-png.flaticon.com/512/1865/1865269.png",
-        price: 3000
-    },
-    {
-        name: "pizaa",
-        icon: "https://cdn-icons-png.flaticon.com/512/3595/3595458.png",
-        price: 450
-    },
-    {
-        name: "pizaa2",
-        icon: "https://cdn-icons-png.flaticon.com/512/3595/3595458.png",
-        price: 450,
-        offer: 25
-    },
-    {
-        name: "pizaa3",
-        icon: "https://cdn-icons-png.flaticon.com/512/3595/3595458.png",
-        price: 450
-    },
-    {
-        name: "phone",
-        icon: "https://www.freepnglogos.com/uploads/mobile-png/device-mobile-phone-icon-small-flat-iconset-paomedia-20.png",
-        price: 7000
-    },
-    {
-        name: "noshabeh",
-        icon: "https://cdn0.iconfinder.com/data/icons/beverage-element-pack-1/512/can-packaging-04c-512.png",
-        price: 500
-    }, {
-        name: "phone",
-        icon: "https://www.freepnglogos.com/uploads/mobile-png/device-mobile-phone-icon-small-flat-iconset-paomedia-20.png",
-        price: 7000,
-        offer: 25
-    },
-    {
-        name: "noshabeh",
-        icon: "https://cdn0.iconfinder.com/data/icons/beverage-element-pack-1/512/can-packaging-04c-512.png",
-        price: 500
-    }, {
-        name: "phone",
-        icon: "https://www.freepnglogos.com/uploads/mobile-png/device-mobile-phone-icon-small-flat-iconset-paomedia-20.png",
-        price: 7000
-    },
-    {
-        name: "noshabeh",
-        icon: "https://cdn0.iconfinder.com/data/icons/beverage-element-pack-1/512/can-packaging-04c-512.png",
-        price: 500,
-        offer: 15
-    }, {
-        name: "phone",
-        icon: "https://www.freepnglogos.com/uploads/mobile-png/device-mobile-phone-icon-small-flat-iconset-paomedia-20.png",
-        price: 7000
-    },
-    {
-        name: "noshabeh1",
-        icon: "https://cdn0.iconfinder.com/data/icons/beverage-element-pack-1/512/can-packaging-04c-512.png",
-        price: 500
-    },
-    {
-        name: "noshabeh2",
-        icon: "https://cdn0.iconfinder.com/data/icons/beverage-element-pack-1/512/can-packaging-04c-512.png",
-        price: 500
-    },
-    {
-        name: "noshabeh3",
-        icon: "https://cdn0.iconfinder.com/data/icons/beverage-element-pack-1/512/can-packaging-04c-512.png",
-        price: 500
-    },
-    {
-        name: "noshabeh4",
-        icon: "https://cdn0.iconfinder.com/data/icons/beverage-element-pack-1/512/can-packaging-04c-512.png",
-        price: 500
+        offer: 0,
+        weight: 1,
     },
 ]
 
 
 
+
 export function ProductsComponent() {
+    const currentActionContextData = useContext<CurrentActionContext>(currentActionContext)
+
     const cartContextData = useContext<CartContext>(cartContext)
     const { cart, setCart } = cartContextData
-    function addToCart(product: any) {
-        let currentProduct: any = cart.find((p: any) => p.name == product.name)
+    const products: Product[] = products2 //currentActionContextData.attach as Product[]
+
+    function addToCart(product: ProductInCart) {
+        let currentProduct: any = cart.find((p: any) => p.key == product.key)
         if (currentProduct) {
-            currentProduct.total += product.number || 1
+            currentProduct.total += product.selectedNumber || 1
         }
         else {
-            product.total = product.number || 1
+            product.total = product.selectedNumber || 1
             cart.push(product)
         }
         setCart([...cart])
@@ -120,9 +51,15 @@ export function ProductsComponent() {
 
     return (
         <div className='grid grid-cols-4 gap-4 justify-center h-80 p-1 '>
-            {products.map((item: any, index: any) => {
+            {products && products.map((item: Product, index: any) => {
+                const itemInCart: ProductInCart = {
+                    total: 0,
+                    icon: `./icons/${item.key}.png`,
+                    selectedNumber: 1,
+                    ...item
+                }
                 return (
-                    <ProductComponent key={index} item={item} onAdd={() => addToCart(item)} />
+                    <ProductComponent key={index} item={itemInCart} onAdd={() => addToCart(itemInCart)} />
                 )
             })}
         </div>

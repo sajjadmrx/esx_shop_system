@@ -1,5 +1,5 @@
-function TriggerNUIEvent(eventName, item)
-    SendNUIMessage(json.encode({ eventName = eventName, item }))
+function TriggerNUIEvent(eventName, attach)
+    SendNUIMessage(json.encode({ eventName = eventName, attach = attach }))
 end
 
 function CloseUi()

@@ -2,6 +2,7 @@ import { Card, Button } from 'react-daisyui';
 import { useContext } from 'react';
 import { CartContext } from '../../interfaces/contexts.interface';
 import { cartContext } from '../../contexts/cart.context';
+import { ProductInCart } from '../../interfaces/product.interface';
 interface Prop {
     item: any
 }
@@ -10,8 +11,8 @@ export function CartItemComponent(prop: Prop) {
     const cartContextData = useContext<CartContext>(cartContext)
     const { cart, setCart } = cartContextData
 
-    function deleteFromCart(product: any) {
-        const newCart = cart.filter((p: any) => p.name != product.name)
+    function deleteFromCart(product: ProductInCart) {
+        const newCart = cart.filter((p: ProductInCart) => p.key != product.key)
         setCart(newCart)
     }
 
@@ -25,7 +26,7 @@ export function CartItemComponent(prop: Prop) {
             />
             <p className='text-white text-lg '>{item.total}</p>
             <Card.Actions>
-                <Button size='xs' className='border-0'
+                <Button size='xs' className='mb-1' shape='circle' color='ghost'
                     onClick={() => deleteFromCart(item)}>
                     🗑️
                 </Button>

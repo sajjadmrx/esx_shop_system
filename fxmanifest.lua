@@ -19,13 +19,15 @@ server_script({
     'locales/*.lua',
     'config.lua',
     'shared/**/*.lua',
+    'server/db/*.lua',
     'server/*.lua'
 })
 
 ui_page('html/build/index.html')
 
 files({
-    'html/fonts/*',
+    'html/build/static/media/*.ttf',
+    'html/build/icons/*',
     'html/build/index.html',
     'html/build/static/js/*.js',
     'html/build/static/css/*.css',

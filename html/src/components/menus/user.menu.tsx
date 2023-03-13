@@ -16,37 +16,42 @@ export function UserMenuComponent(props: Props) {
     const currentActionContextData = React.useContext<CurrentActionContext>(currentActionContext)
     const isShow: boolean = currentActionContextData.currentAction == EventsName.OPEN_MENU
     const [cart, setCart] = useState<any[]>([])
-
     useEffect(() => {
         if (props.closed) {
             setCart([])
         }
     }, [props.closed])
 
+    async function BuyHandler() {
+    }
 
-    return (
-        <div hidden={!isShow}>
-            <cartContext.Provider value={{ cart, setCart }}>
-                <div className='overflow-auto'>
-                    <ProductsComponent />
-                </div>
-                <div className='mt-2 border border-gray-700 rounded-md border-dashed'>
-                    <Cart />
-                </div>
-                <div className='mt-2'>
-                    <h1 className='text-xl text-white font-[Roboto]'>Total Products: <strong className='text-red-400'>{cart.length}</strong></h1>
-                    <h1 className='text-xl text-white font-[Roboto]'>Total Price: <strong className='text-green-300'>${Number(calculateTotalPrice(cart).toFixed()).toLocaleString()}</strong></h1>
 
-                    <div className='mt-2'>
-                        <Button className='bg-green-800 text-white border-0 hover:bg-green-600' >
-                            <MdShoppingCartCheckout className='mr-2' />
-                            Buy
-                        </Button>
+    if (isShow)
+        return (
+            <div>
+                <cartContext.Provider value={{ cart, setCart }}>
+                    <div className='overflow-auto'>
+                        <ProductsComponent />
                     </div>
-                </div>
-            </cartContext.Provider>
-        </div>
-    )
+                    <div className='mt-2 border border-gray-700 rounded-md border-dashed'>
+                        <Cart />
+                    </div>
+                    <div className='mt-2'>
+                        <h1 className='text-xl text-white font-[Roboto]'>Total Products: <strong className='text-red-400'>{cart.length}</strong></h1>
+                        <h1 className='text-xl text-white font-[Roboto]'>Total Price: <strong className='text-green-300'>${Number(calculateTotalPrice(cart).toFixed()).toLocaleString()}</strong></h1>
+
+                        <div className='mt-2'>
+                            <Button className='bg-green-800 text-white border-0 hover:bg-green-600' onClick={() => BuyHandler()}>
+                                <MdShoppingCartCheckout className='mr-2' />
+                                Buy
+                            </Button>
+                        </div>
+                    </div>
+                </cartContext.Provider>
+            </div>
+        )
+    else
+        return <div></div>
 }
 
 function calculateTotalPrice(card: any[]): number {

@@ -3,5 +3,7 @@ import { CurrentActionContext } from "../interfaces/contexts.interface";
 
 export const currentActionContext = React.createContext<CurrentActionContext>({
     currentAction: null,
-    setCurrentAction: () => { }
+    setCurrentAction: () => { },
+    attach: null,
+    setAttach: () => { }
 })

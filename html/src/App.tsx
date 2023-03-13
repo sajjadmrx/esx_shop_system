@@ -9,7 +9,8 @@ import { EventsName } from './constants/eventsName';
 
 
 function App() {
-  const [currentAction, setCurrentAction] = React.useState<string | null>(EventsName.OPEN_ADMIN_MENU)
+  const [currentAction, setCurrentAction] = React.useState<string | null>(EventsName.OPEN_MENU)
+  const [attach, setAttach] = React.useState<any>(null)
   useEffect(() => {
     async function close() {
       await fetch("https://shop_system/close", { method: "POST" })
@@ -22,7 +23,7 @@ function App() {
   }, [currentAction])
   return (
     <div hidden={currentAction == null}>
-      <currentActionContext.Provider value={{ currentAction, setCurrentAction }}>
+      <currentActionContext.Provider value={{ currentAction, setCurrentAction, attach, setAttach }}>
         <MenusComponents />
       </currentActionContext.Provider>
     </div>

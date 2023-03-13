@@ -26,5 +26,5 @@ html[data-theme="dark"]::-webkit-scrollbar {
 
 @font-face {
     font-family: Roboto;
-    src: url(../fonts/Roboto-Medium.ttf);
+    src: url(./fonts/Roboto-Medium.ttf);
 }
