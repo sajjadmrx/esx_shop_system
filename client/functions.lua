@@ -3,5 +3,5 @@ function TriggerNUIEvent(eventName, attach)
 end
 
 function CloseUi()
-
+    TriggerNUIEvent(EventNUiNames.HideAll)
 end

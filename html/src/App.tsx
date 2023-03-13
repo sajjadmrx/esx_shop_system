@@ -5,16 +5,16 @@ import './App.css';
 import { MenusComponents } from './components/menus';
 import { currentActionContext } from './contexts/action.context';
 import { EventsName } from './constants/eventsName';
+import { apiService } from './services/service';
 
 
 
 function App() {
-  const [currentAction, setCurrentAction] = React.useState<string | null>(EventsName.OPEN_MENU)
+  const [currentAction, setCurrentAction] = React.useState<string | null>(null)
   const [attach, setAttach] = React.useState<any>(null)
   useEffect(() => {
     async function close() {
-      await fetch("https://shop_system/close", { method: "POST" })
-
+      await apiService.closeUi()
     }
     if (currentAction == null)
       close()

@@ -8,6 +8,7 @@ import { MdShoppingCartCheckout, MdAddShoppingCart } from 'react-icons/md'
 import { ProductsComponent } from '../products/products';
 import { Cart } from '../cart/cart';
 import { cartContext } from '../../contexts/cart.context';
+import { apiService } from '../../services/service';
 
 interface Props {
     closed: boolean
@@ -23,6 +24,8 @@ export function UserMenuComponent(props: Props) {
     }, [props.closed])
 
     async function BuyHandler() {
+        const response = await apiService.buy(cart)
+        console.log(response)
     }
 
 

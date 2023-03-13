@@ -18,15 +18,13 @@
 CREATE TABLE IF NOT EXISTS `shop_items` (
   `id` int NOT NULL AUTO_INCREMENT,
   `key` varchar(50) NOT NULL,
-  `label` varchar(50) NOT NULL,
-  `weight` int NOT NULL DEFAULT '1',
   `price` int NOT NULL,
-  `offer` tinyint DEFAULT '0',
+  `offer` int DEFAULT '0',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `key` (`key`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+  UNIQUE KEY `key` (`key`),
+  CONSTRAINT `FK_key` FOREIGN KEY (`key`) REFERENCES `items` (`name`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb3;
 
--- Dumping data for table rp.shop_items: ~0 rows (approximately)
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

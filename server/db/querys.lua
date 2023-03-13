@@ -1,19 +1,21 @@
 Querys = {}
 
 Querys.FetchItems = function()
-    return MySQL.query.await("SELECT * FROM `shop_items`")
+    return MySQL.query.await("SELECT * FROM `shop_items` inner join items ON shop_items.`key` = items.name")
 end
 
 ---@param id number
 Querys.FetchItemById = function(id)
-    local items = MySQL.query.await("SELECT * FROM shop_items WHERE id=?", { id })
+    local items = MySQL.query.await(
+        "SELECT * FROM shop_items inner join items ON shop_items.`key` = items.name WHERE id=?", { id })
     return items[1]
 end
 
 
 ---@param key string
 Querys.FetchItemByKey = function(key)
-    local items = MySQL.query.await("SELECT * FROM shop_items WHERE `key`=?", { key })
+    local items = MySQL.query.await(
+        "SELECT * FROM shop_items inner join items ON shop_items.`key` = items.name WHERE `key`=?", { key })
     return items[1]
 end
 

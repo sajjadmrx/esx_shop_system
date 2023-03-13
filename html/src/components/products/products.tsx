@@ -35,7 +35,7 @@ export function ProductsComponent() {
 
     const cartContextData = useContext<CartContext>(cartContext)
     const { cart, setCart } = cartContextData
-    const products: Product[] = products2 //currentActionContextData.attach as Product[]
+    const products: Product[] = currentActionContextData.attach as Product[]
 
     function addToCart(product: ProductInCart) {
         let currentProduct: any = cart.find((p: any) => p.key == product.key)
@@ -56,7 +56,7 @@ export function ProductsComponent() {
                     total: 0,
                     icon: `./icons/${item.key}.png`,
                     selectedNumber: 1,
-                    ...item
+                    ...item,
                 }
                 return (
                     <ProductComponent key={index} item={itemInCart} onAdd={() => addToCart(itemInCart)} />
