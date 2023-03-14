@@ -36,6 +36,32 @@ ESX.RegisterServerCallback(ServerCallBackEnum.BUY, function(source, cb, data)
     cb({ success = true })
 end)
 
+ESX.RegisterServerCallback(ServerCallBackEnum.ADD_ITEM, function(source, cb, data)
+    local source = source
+    local xPlayer = ESX.GetPlayerFromId(source)
+    CreateThread(function()
+        if xPlayer.getGroup() ~= 'admin' then
+            cb({ message = "ACCESS DENIED", success = false })
+            return;
+        end
+
+        local item = json.decode(json.encode(data))
+        local isSuccess = false
+        if item.label and item.weight then
+            isSuccess = Querys.InsertToItems(item)
+        else
+            isSuccess = Querys.Insert(item)
+        end
+        if isSuccess then
+            SyncItemsData()
+            cb({ success = true, attach = items.data })
+            broadcastUpdateItems()
+        else
+            cb({ success = false })
+        end
+    end)
+end)
+
 
 function calculateTotalPrice(cart)
     local totalPrice = 0

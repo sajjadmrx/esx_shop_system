@@ -5,3 +5,8 @@ end
 function CloseUi()
     TriggerNUIEvent(EventNUiNames.HideAll)
 end
+
+function OpenUi(name, attach)
+    TriggerNUIEvent(name, attach)
+    SetNuiFocus(true, true)
+end

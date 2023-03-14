@@ -19,11 +19,29 @@ Querys.FetchItemByKey = function(key)
     return items[1]
 end
 
+---@param item table
+Querys.InsertToItems = function(item)
+    local queries = {
+        'INSERT INTO items (name, label, weight, rare, can_remove) VALUES (:name,:label,:weight,1,0);',
+        'INSERT INTO shop_items (`key`,`price`,`offer`) VALUES (:key,:price,:offer);'
+    }
+    local parameters = {
+        ['name'] = item.key,
+        ['label'] = item.label,
+        ['weight'] = item.weight,
+        ['key'] = item.key,
+        ['price'] = item.price,
+        ['offer'] = item.offer
+    }
+    local success = MySQL.transaction.await(queries, parameters)
+    return success
+end
 
 ---@param item table
-Querys.InsertItem = function(item)
-    MySQL.prepare("INSERT INTO shop_items (`key`,`label`,`weight`,`price`,`offer`) VALUES (?,?,?,?,?)",
-        { item.key, item.label, item.weight, item.price, item.offer or 0 })
+Querys.Insert = function(item)
+    local result = MySQL.query.await("INSERT INTO shop_items (`key`,`price`,`offer`) VALUES (?,?,?)",
+        { item.key, item.price, item.offer or 0 })
+    return result
 end
 
 ---@param id number
