@@ -6,17 +6,32 @@ ESX.RegisterServerCallback(ServerCallBackEnum.BUY, function(source, cb, data)
     local source = source
     local xPlayer = ESX.GetPlayerFromId(source)
 
-    local cartData = json.decode(json.encode(data))
+    data = json.decode(json.encode(data))
+    local cartData = data.cartData
     local price = calculateTotalPrice(cartData)
     local playerMoney = xPlayer.getMoney()
-    if playerMoney < price then
-        cb({ success = false, message = "You don't have enough money." })
-        return;
+    local playerBank = xPlayer.getAccount('bank').money
+    local method = data.method
+
+    if method == "CASH" then
+        if playerMoney < price then
+            cb({ success = false, message = "You don't have enough money." })
+            return;
+        end
+    else
+        if playerBank < price then
+            cb({ success = false, message = "You have enough money in your bank account." })
+            return;
+        end
     end
+
     for i = 1, #cartData, 1 do
         local productInCart = cartData[i]
         local product = Finder(items.data, 'key', productInCart.key)
-
+        if productInCart.total > 20 then
+            cb({ success = false, message = "The number is exceeded. " })
+            return;
+        end
         if not product then
             cb({ success = false, message = "invalid item" })
             return;
@@ -29,9 +44,13 @@ ESX.RegisterServerCallback(ServerCallBackEnum.BUY, function(source, cb, data)
 
         xPlayer.addInventoryItem(product.key, productInCart.total)
     end
-    playerMoney = playerMoney - price;
-
-    xPlayer.setMoney(playerMoney)
+    if method == "CASH" then
+        playerMoney = playerMoney - price;
+        xPlayer.setMoney(playerMoney)
+    else
+        playerBank = playerBank - price
+        xPlayer.setAccountMoney('bank', playerBank)
+    end
 
     cb({ success = true })
 end)

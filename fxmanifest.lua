@@ -28,6 +28,7 @@ ui_page('html/build/index.html')
 files({
     'html/build/static/media/*.ttf',
     'html/build/icons/*',
+    'html/build/sounds/*.mp3',
     'html/build/index.html',
     'html/build/static/js/*.js',
     'html/build/static/css/*.css',

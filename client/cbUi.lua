@@ -6,6 +6,7 @@ RegisterNuiCallback('buy', function(data, cb)
         local response = json.decode(json.encode(responseData));
         if response.success then
             CloseUi()
+            cb(response)
             return;
         end
 

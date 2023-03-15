@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import './App.css';
 
-
 import { MenusComponents } from './components/menus';
 import { currentActionContext } from './contexts/action.context';
 import { EventsName } from './constants/eventsName';

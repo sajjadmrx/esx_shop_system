@@ -9,6 +9,7 @@ import { ProductsComponent } from '../products/products';
 import { Cart } from '../cart/cart';
 import { cartContext } from '../../contexts/cart.context';
 import { apiService } from '../../services/service';
+import { SelectMethodModal } from './selectMethod.component';
 
 interface Props {
     closed: boolean
@@ -23,9 +24,18 @@ export function UserMenuComponent(props: Props) {
         }
     }, [props.closed])
 
-    async function BuyHandler() {
-        const response = await apiService.buy(cart)
-        console.log(response)
+    async function BuyHandler(target: string) {
+        if (cart.length) {
+            const items = {
+                cartData: cart,
+                method: target
+            }
+            const response = await apiService.buy(items)
+            if (response.success) {
+                const audio = new Audio("./sounds/success_payment.mp3");
+                audio.play();
+            }
+        }
     }
 
 
@@ -44,10 +54,11 @@ export function UserMenuComponent(props: Props) {
                         <h1 className='text-xl text-white font-[Roboto]'>Total Price: <strong className='text-green-300'>${Number(calculateTotalPrice(cart).toFixed()).toLocaleString()}</strong></h1>
 
                         <div className='mt-2'>
-                            <Button className='bg-green-800 text-white border-0 hover:bg-green-600' onClick={() => BuyHandler()}>
+
+                            <SelectMethodModal toggleComponent={<Button className='bg-green-800 text-white border-0 hover:bg-green-600 hover:transition-transform hover:w-80' disabled={!!!cart.length}>
                                 <MdShoppingCartCheckout className='mr-2' />
                                 Buy
-                            </Button>
+                            </Button>} cb={(va: any) => BuyHandler(va)} />
                         </div>
                     </div>
                 </cartContext.Provider>

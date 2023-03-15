@@ -12,7 +12,7 @@ export class ApiService {
         return this.axios.post('/close')
     }
 
-    async buy(data: ProductInCart[]) {
+    async buy(data: any) {
         try {
             const response = await this.axios.post('/buy', data)
             return response.data
