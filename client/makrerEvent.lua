@@ -22,7 +22,7 @@ CreateThread(function()
                     if value.ShowMarker then
                         DrawMarker(Config.MarkerType, value.Pos[i], 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Config.MarkerSize.x,
                             Config.MarkerSize.y, Config.MarkerSize.z, Config.MarkerColor.r, Config.MarkerColor.g,
-                            Config.MarkerColor.b, 100, false, true, 2, false, nil, nil, false)
+                            Config.MarkerColor.b, 100, 0, 1, false, false, 0, false, '', '', true)
                     end
 
                     if distance < 2.0 then

@@ -11,7 +11,7 @@ RegisterNuiCallback('buy', function(data, cb)
             return;
         end
 
-        ESX.ShowHelpNotification(response.message)
+        ESX.ShowHelpNotification("~r~" .. response.message)
     end, data)
 end)
 

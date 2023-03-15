@@ -35,7 +35,7 @@ export function MenusComponents() {
                                 🛍️ SHOP SYSTEM 🛍️
                                 ------
                             </h1>
-                            <span className='font-normal font-[Roboto] text-yellow-100 text-opacity-70'>Beta</span>
+                            <span className='font-normal font-[Roboto] text-yellow-100 text-opacity-70'>V 1.0</span>
                         </div>
                         <UserMenuComponent closed={isHidden} />
                         <AdminMenuComponent closed={isHidden} />
