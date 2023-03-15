@@ -20,6 +20,7 @@ Querys.FetchItemByKey = function(key)
 end
 
 ---@param item table
+---@return boolean
 Querys.InsertToItems = function(item)
     local queries = {
         'INSERT INTO items (name, label, weight, rare, can_remove) VALUES (:name,:label,:weight,1,0);',
@@ -44,13 +45,33 @@ Querys.Insert = function(item)
     return result
 end
 
----@param id number
+---@param key string
 ---@param item table
+---@return boolean
+Querys.Update = function(key, item)
+    local queries = {
+        'UPDATE items set name=:name,label=:label WHERE name=:key',
+        'UPDATE shop_items set price=:price,offer=:offer WHERE `key`=:newkey'
+    }
+    local parameters = {
+        ['name'] = item.key,
+        ['key'] = key,
+        ['label'] = item.label,
+        ['weight'] = item.weight,
+        ['price'] = item.price,
+        ['offer'] = item.offer,
+        ['newkey'] = item.key
+    }
+    local success = MySQL.transaction.await(queries, parameters)
+    return success
+end
+
+---@param key string
 ---@return number
-Querys.Update = function(id, item)
+Querys.Delete = function(key)
     local resJson = MySQL.query.await(
-        "UPDATE shop_items SET `key` = ?, `label` = ?, `weight` = ?, `price` = ?, `offer` = ? WHERE `id` = ?",
-        { item.key, item.label, item.weight, item.price, item.offer or 0, id })
+        "DELETE FROM shop_items WHERE `key`=?",
+        { key })
     local response = json.decode(json.encode(resJson))
     return response.affectedRows
 end

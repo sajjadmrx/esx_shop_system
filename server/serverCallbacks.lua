@@ -81,6 +81,51 @@ ESX.RegisterServerCallback(ServerCallBackEnum.ADD_ITEM, function(source, cb, dat
     end)
 end)
 
+ESX.RegisterServerCallback(ServerCallBackEnum.REMOVE_ITEM, function(source, cb, data)
+    local source = source
+    local xPlayer = ESX.GetPlayerFromId(source)
+    if xPlayer.getGroup() ~= 'admin' then
+        cb({ message = "ACCESS DENIED", success = false })
+        return;
+    end
+    CreateThread(function()
+        local item = json.decode(json.encode(data))
+        local isSuccess = false
+
+        local resp = Querys.Delete(item.key)
+        if resp == 1 then
+            isSuccess = true
+        end
+        if isSuccess then
+            SyncItemsData()
+            cb({ success = true, attach = items.data })
+            broadcastUpdateItems()
+        else
+            cb({ success = false })
+        end
+    end)
+end)
+
+ESX.RegisterServerCallback(ServerCallBackEnum.UPDATE_ITEM, function(source, cb, data)
+    local source = source
+    local xPlayer = ESX.GetPlayerFromId(source)
+    if xPlayer.getGroup() ~= 'admin' then
+        cb({ message = "ACCESS DENIED", success = false })
+        return;
+    end
+    CreateThread(function()
+        local item = json.decode(json.encode(data))
+        local isSuccess =
+            Querys.Update(item.key, item.data)
+        if isSuccess then
+            SyncItemsData()
+            cb({ success = true, attach = items.data })
+            broadcastUpdateItems()
+        else
+            cb({ success = false })
+        end
+    end)
+end)
 
 function calculateTotalPrice(cart)
     local totalPrice = 0

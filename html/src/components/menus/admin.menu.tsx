@@ -22,10 +22,16 @@ export function AdminMenuComponent(props: Props) {
         const elements: Array<JSX.Element> = [
             <Input id='uniqeName' placeholder='key' className='swal2-input' type='text' defaultValue={item.key || ''} required></Input>,
             <Input id='price' placeholder='Price' className='swal2-input' type='number' required defaultValue={item.price || ''}></Input>,
-            <Input id='offer' placeholder='offer 0-100' className='swal2-input w-20' type='number' min={0} max={100} defaultValue={item.offer || 0}></Input>,
+
         ]
+        if (item.label) {
+            elements.push(
+                <Input id='label' placeholder='label' className='swal2-input' type='text' defaultValue={item.label || ''} required></Input>,
+            )
+        }
+        elements.push(<Input id='offer' placeholder='offer 0-100' className='swal2-input w-20' type='number' min={0} max={100} defaultValue={item.offer || 0}></Input>)
         const { value: formValues } = await MySwal.fire({
-            title: 'Add Product',
+            title: item.key ? 'Edit Product ' : 'Add Product',
             html:
                 (
                     <div>
@@ -36,6 +42,8 @@ export function AdminMenuComponent(props: Props) {
             preConfirm: () => {
                 // @ts-ignore
                 const uniqeName: string | null = document.getElementById('uniqeName')?.value || null;
+                // @ts-ignore
+                const label: string | null = document.getElementById('label')?.value || null;
                 // @ts-ignore
                 const price: string | null = document.getElementById('price')?.value || null;
                 // @ts-ignore
@@ -49,17 +57,22 @@ export function AdminMenuComponent(props: Props) {
                     return Swal.showValidationMessage(
                         `Invalid Data`
                     )
+                if (item.label && !label)
+                    return Swal.showValidationMessage(
+                        `Invalid Data`
+                    )
                 return [
                     uniqeName,
                     price,
                     offer,
+                    label
                 ];
             },
         });
 
         if (formValues) {
-            const [key, price, offer] = formValues;
-            cb({ key, price, offer })
+            const [key, price, offer, label] = formValues;
+            cb({ key, price, offer, label })
         }
     }
 
@@ -124,10 +137,10 @@ export function AdminMenuComponent(props: Props) {
                                         <span>{va.weight}</span>
                                         <div>
                                             <ButtonGroup >
-                                                <Button onClick={() => handleSwalClick(va, console.log)}>
+                                                <Button onClick={() => handleSwalClick(va, (updatedData: any) => update(va.key, updatedData, currentActionContextData))}>
                                                     <MdEdit size={15} />
                                                 </Button>
-                                                <Button>
+                                                <Button onClick={() => remove(va.key, currentActionContextData)}>
                                                     <MdDeleteForever size={15} />
                                                 </Button>
                                             </ButtonGroup>
@@ -201,5 +214,18 @@ async function addProduct(item: any, cb: any) {
     if (formValues) {
         const [key, label, weight, price, offer] = formValues;
         cb({ key, label, weight, price, offer })
+    }
+}
+
+async function remove(key: string, currentActionContextData: CurrentActionContext) {
+    const response = await apiService.remove(key)
+    if (response.success) {
+        currentActionContextData.setAttach(response.attach)
+    }
+}
+async function update(key: string, updatedData: any, currentActionContextData: CurrentActionContext) {
+    const response = await apiService.update(key, updatedData)
+    if (response.success) {
+        currentActionContextData.setAttach(response.attach)
     }
 }
