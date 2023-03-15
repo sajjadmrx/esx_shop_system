@@ -3,7 +3,7 @@ import { messageHandler } from '../../handlers/message.handler';
 import { currentActionContext } from '../../contexts/action.context';
 import { CurrentActionContext } from '../../interfaces/contexts.interface';
 import React from 'react';
-import { Hero, Button, Card, Badge } from 'react-daisyui';
+import { Button } from 'react-daisyui';
 import { UserMenuComponent } from './user.menu';
 import { RiCloseFill } from "react-icons/ri"
 import { AdminMenuComponent } from './admin.menu';
@@ -15,9 +15,11 @@ export function MenusComponents() {
     function close() {
         currentActionContextData.setCurrentAction(null)
     }
-    return (
-        <div hidden={isHidden}>
+    if (isHidden)
+        return <div hidden={true}></div>
 
+    return (
+        <div>
             <div className="hero min-h-screen">
                 <div
                     className="px-0 sm:p-4 hero-content bg-[#202128] text-center border-[#5d7e9721] rounded-[18px] max-w-[350px] md:max-w-[450px] md:min-w-[720px]  border-[4px]  shadow-lg mb-1 ">

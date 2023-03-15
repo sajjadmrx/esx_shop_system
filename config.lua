@@ -4,6 +4,7 @@ Config.MarkerSize = { x = 1.1, y = 0.7, z = 1.1 }
 Config.MarkerType = 29
 Config.MarkerColor = { r = 50, g = 200, b = 50, a = 200 }
 Config.Locale = GetConvar('esx:locale', 'fing')
+Config.Role = "admin"
 Config.Zones = {
     Main = {
         canUseAllItems = true,

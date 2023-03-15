@@ -4,7 +4,7 @@ import { currentActionContext } from '../../contexts/action.context';
 import { EventsName } from '../../constants/eventsName';
 import { Button } from 'react-daisyui';
 import { useEffect } from 'react';
-import { MdShoppingCartCheckout, MdAddShoppingCart } from 'react-icons/md'
+import { MdShoppingCartCheckout } from 'react-icons/md'
 import { ProductsComponent } from '../products/products';
 import { Cart } from '../cart/cart';
 import { cartContext } from '../../contexts/cart.context';
@@ -33,6 +33,7 @@ export function UserMenuComponent(props: Props) {
             const response = await apiService.buy(items)
             if (response.success) {
                 const audio = new Audio("./sounds/success_payment.mp3");
+                audio.volume = 0.5
                 audio.play();
             }
         }

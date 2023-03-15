@@ -1,6 +1,7 @@
 items = {}
 items.data = {}
-function SyncItemsData(broadcast)
+
+function SyncItemsData()
     local result = Querys.FetchItems()
     items.data = result
 end

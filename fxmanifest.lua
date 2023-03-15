@@ -1,8 +1,8 @@
 fx_version 'adamant'
 game 'gta5'
-author 'test'
+author 'sajjadmrx'
 version '1.0.0'
-description 'manage shop'
+description 'shop'
 lua54 'yes'
 
 

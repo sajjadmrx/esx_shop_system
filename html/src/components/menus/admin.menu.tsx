@@ -1,8 +1,9 @@
 import { useContext, useState, useEffect } from 'react';
-import { Card, Button, Avatar, Input, Table, ButtonGroup } from 'react-daisyui';
+import { Card, Button, Avatar, Input, Table, ButtonGroup, Alert } from 'react-daisyui';
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
-import { MdDeleteForever, MdEdit, MdOutlineAdd, MdOutlineAddBox, MdRemove } from 'react-icons/md';
+import { MdDeleteForever, MdEdit, MdOutlineAdd } from 'react-icons/md';
+import { CiWarning } from 'react-icons/ci';
 import { AiFillFolderAdd } from "react-icons/ai"
 import { CurrentActionContext } from '../../interfaces/contexts.interface';
 import { currentActionContext } from '../../contexts/action.context';
@@ -18,13 +19,16 @@ export function AdminMenuComponent(props: Props) {
     const isShow: boolean = currentActionContextData.currentAction == EventsName.OPEN_ADMIN_MENU
     const products = currentActionContextData.attach as Product[]
     const [item, setItem] = useState(null)
-    async function handleSwalClick(item: any, cb: any) {
+
+
+    async function addOrEditFromItem(item: any, cb: any) {
         const elements: Array<JSX.Element> = [
             <Input id='uniqeName' placeholder='key' className='swal2-input' type='text' defaultValue={item.key || ''} required></Input>,
             <Input id='price' placeholder='Price' className='swal2-input' type='number' required defaultValue={item.price || ''}></Input>,
 
         ]
-        if (item.label) {
+        const isEdit = !!item.label
+        if (isEdit) {
             elements.push(
                 <Input id='label' placeholder='label' className='swal2-input' type='text' defaultValue={item.label || ''} required></Input>,
             )
@@ -35,6 +39,10 @@ export function AdminMenuComponent(props: Props) {
             html:
                 (
                     <div>
+                        {!isEdit && <Alert color='warning'>
+                            <CiWarning />
+                            add product from `items` table
+                        </Alert>}
                         {elements.map(elm => elm)}
                     </div>
                 ),
@@ -100,12 +108,12 @@ export function AdminMenuComponent(props: Props) {
                     <div className='relative top-4'>
                         <div className='grid grid-cols-2 gap-4'>
                             <div>
-                                <Button onClick={() => addProduct({}, (item: any) => setItem(item))} color='success' >
+                                <Button onClick={() => addItemAndProduct({}, (item: any) => setItem(item))} color='success' >
                                     <MdOutlineAdd className='mr-2' />
                                     Add item and product</Button>
                             </div>
                             <div>
-                                <Button onClick={() => handleSwalClick({}, (item: any) => setItem(item))} color='accent'>
+                                <Button onClick={() => addOrEditFromItem({}, (item: any) => setItem(item))} color='accent'>
                                     <AiFillFolderAdd className='mr-2' />
                                     Add  From Items</Button>
                             </div>
@@ -137,7 +145,7 @@ export function AdminMenuComponent(props: Props) {
                                         <span>{va.weight}</span>
                                         <div>
                                             <ButtonGroup >
-                                                <Button onClick={() => handleSwalClick(va, (updatedData: any) => update(va.key, updatedData, currentActionContextData))}>
+                                                <Button onClick={() => addOrEditFromItem(va, (updatedData: any) => update(va.key, updatedData, currentActionContextData))}>
                                                     <MdEdit size={15} />
                                                 </Button>
                                                 <Button onClick={() => remove(va.key, currentActionContextData)}>
@@ -163,7 +171,7 @@ export function AdminMenuComponent(props: Props) {
         return <div></div>
 }
 
-async function addProduct(item: any, cb: any) {
+async function addItemAndProduct(item: any, cb: any) {
     const elements: Array<JSX.Element> = [
         <Input id='uniqeName' placeholder='key' className='swal2-input' type='text' defaultValue={item.key || ''} required></Input>,
         <Input id='label' placeholder='label' className='swal2-input' type='text' defaultValue={item.label || ''} required></Input>,

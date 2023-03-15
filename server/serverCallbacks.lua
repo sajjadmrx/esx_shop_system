@@ -8,7 +8,7 @@ ESX.RegisterServerCallback(ServerCallBackEnum.BUY, function(source, cb, data)
 
     data = json.decode(json.encode(data))
     local cartData = data.cartData
-    local price = calculateTotalPrice(cartData)
+    local price = CalculateTotalPrice(cartData)
     local playerMoney = xPlayer.getMoney()
     local playerBank = xPlayer.getAccount('bank').money
     local method = data.method
@@ -43,8 +43,6 @@ ESX.RegisterServerCallback(ServerCallBackEnum.BUY, function(source, cb, data)
         end
     end
 
-
-
     for i = 1, #cartData, 1 do
         local productInCart = cartData[i]
         xPlayer.addInventoryItem(productInCart.key, productInCart.total)
@@ -67,7 +65,7 @@ ESX.RegisterServerCallback(ServerCallBackEnum.ADD_ITEM, function(source, cb, dat
     local source = source
     local xPlayer = ESX.GetPlayerFromId(source)
     CreateThread(function()
-        if xPlayer.getGroup() ~= 'admin' then
+        if xPlayer.getGroup() ~= Config.Role then
             cb({ message = TranslateCap("access_denied"), success = false })
             return;
         end
@@ -92,7 +90,7 @@ end)
 ESX.RegisterServerCallback(ServerCallBackEnum.REMOVE_ITEM, function(source, cb, data)
     local source = source
     local xPlayer = ESX.GetPlayerFromId(source)
-    if xPlayer.getGroup() ~= 'admin' then
+    if xPlayer.getGroup() ~= Config.Role then
         cb({ message = TranslateCap("access_denied"), success = false })
         return;
     end
@@ -117,7 +115,7 @@ end)
 ESX.RegisterServerCallback(ServerCallBackEnum.UPDATE_ITEM, function(source, cb, data)
     local source = source
     local xPlayer = ESX.GetPlayerFromId(source)
-    if xPlayer.getGroup() ~= 'admin' then
+    if xPlayer.getGroup() ~= Config.Role then
         cb({ message = TranslateCap("access_denied"), success = false })
         return;
     end
@@ -134,17 +132,3 @@ ESX.RegisterServerCallback(ServerCallBackEnum.UPDATE_ITEM, function(source, cb, 
         end
     end)
 end)
-
-function calculateTotalPrice(cart)
-    local totalPrice = 0
-    for i = 1, #cart do
-        local product = cart[i]
-        local price = product.price
-        if product.total then
-            price = price * product.total
-        end
-        local discount = (product.offer or 0) / 100
-        totalPrice = totalPrice + price - price * discount
-    end
-    return math.floor(totalPrice)
-end
