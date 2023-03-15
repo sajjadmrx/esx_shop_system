@@ -1,6 +1,6 @@
 AddEventHandler("esx_shop_system:hasEnteredMarker", function(zone)
     currentAction = "shop_menu"
-    currentActionMsg = "press [E]"
+    currentActionMsg = TranslateCap("open_menu", "E")
     currentActionData = { zone = zone }
 end)
 

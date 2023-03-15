@@ -15,12 +15,12 @@ ESX.RegisterServerCallback(ServerCallBackEnum.BUY, function(source, cb, data)
 
     if method == "CASH" then
         if playerMoney < price then
-            cb({ success = false, message = "You don't have enough money." })
+            cb({ success = false, message = TranslateCap("not_enough_money") })
             return;
         end
     else
         if playerBank < price then
-            cb({ success = false, message = "You have enough money in your bank account." })
+            cb({ success = false, message = TranslateCap("enough_money_in_bank") })
             return;
         end
     end
@@ -29,21 +29,29 @@ ESX.RegisterServerCallback(ServerCallBackEnum.BUY, function(source, cb, data)
         local productInCart = cartData[i]
         local product = Finder(items.data, 'key', productInCart.key)
         if productInCart.total > 20 then
-            cb({ success = false, message = "The number is exceeded. " })
+            cb({ success = false, message = TranslateCap("number_exceeded") })
             return;
         end
         if not product then
-            cb({ success = false, message = "invalid item" })
+            cb({ success = false, message = TranslateCap("invalid_product") })
             return;
         end
 
         if product.price ~= productInCart.price then
-            cb({ success = false, message = "invalid request" })
+            cb({ success = false, message = TranslateCap("invalid_request") })
             return;
         end
-
-        xPlayer.addInventoryItem(product.key, productInCart.total)
     end
+
+
+
+    for i = 1, #cartData, 1 do
+        local productInCart = cartData[i]
+        xPlayer.addInventoryItem(productInCart.key, productInCart.total)
+    end
+
+
+
     if method == "CASH" then
         playerMoney = playerMoney - price;
         xPlayer.setMoney(playerMoney)
@@ -60,7 +68,7 @@ ESX.RegisterServerCallback(ServerCallBackEnum.ADD_ITEM, function(source, cb, dat
     local xPlayer = ESX.GetPlayerFromId(source)
     CreateThread(function()
         if xPlayer.getGroup() ~= 'admin' then
-            cb({ message = "ACCESS DENIED", success = false })
+            cb({ message = TranslateCap("access_denied"), success = false })
             return;
         end
 
@@ -85,7 +93,7 @@ ESX.RegisterServerCallback(ServerCallBackEnum.REMOVE_ITEM, function(source, cb, 
     local source = source
     local xPlayer = ESX.GetPlayerFromId(source)
     if xPlayer.getGroup() ~= 'admin' then
-        cb({ message = "ACCESS DENIED", success = false })
+        cb({ message = TranslateCap("access_denied"), success = false })
         return;
     end
     CreateThread(function()
@@ -110,7 +118,7 @@ ESX.RegisterServerCallback(ServerCallBackEnum.UPDATE_ITEM, function(source, cb, 
     local source = source
     local xPlayer = ESX.GetPlayerFromId(source)
     if xPlayer.getGroup() ~= 'admin' then
-        cb({ message = "ACCESS DENIED", success = false })
+        cb({ message = TranslateCap("access_denied"), success = false })
         return;
     end
     CreateThread(function()

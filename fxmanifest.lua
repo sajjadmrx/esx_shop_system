@@ -10,14 +10,17 @@ shared_script '@es_extended/imports.lua'
 
 client_scripts({
     'config.lua',
+    '@es_extended/locale.lua',
+    'locales/*.lua',
     'shared/**/*.lua',
     'client/*.lua'
 })
 
 server_script({
     '@oxmysql/lib/MySQL.lua',
-    'locales/*.lua',
     'config.lua',
+    '@es_extended/locale.lua',
+    'locales/*.lua',
     'shared/**/*.lua',
     'server/db/*.lua',
     'server/*.lua'
