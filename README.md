@@ -26,7 +26,7 @@
    
 3. upload icons into [icons folder](./html/public/icons/)
 4. open [sql file](./shop_items.sql) and run.
-5. npm run build 
+5. cd ./html/ && npm run build 
 
 6. copy/paste these lines to server.cfg `server.cfg`
 > ```sh
