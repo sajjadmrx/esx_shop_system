@@ -16,7 +16,7 @@ interface Props {
 const MySwal = withReactContent(Swal)
 export function AdminMenuComponent(props: Props) {
     const currentActionContextData = useContext<CurrentActionContext>(currentActionContext)
-    const isShow: boolean = currentActionContextData.currentAction == EventsName.OPEN_ADMIN_MENU
+    const isShow: boolean = currentActionContextData.currentAction === EventsName.OPEN_ADMIN_MENU
     const products = currentActionContextData.attach as Product[]
     const [item, setItem] = useState(null)
 

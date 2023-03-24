@@ -8,7 +8,7 @@ interface EventData<M> {
 export function messageHandler(curentActionContext: CurrentActionContext) {
 
     function handleMessage(event: any) {
-        if (event.data && typeof event.data == "string") {
+        if (event.data && typeof event.data === "string") {
             try {
                 const data: EventData<any> = JSON.parse(event.data)
                 switch (data.eventName) {
