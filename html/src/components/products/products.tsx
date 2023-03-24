@@ -38,7 +38,7 @@ export function ProductsComponent() {
     const products: Product[] = currentActionContextData.attach as Product[]
 
     function addToCart(product: ProductInCart) {
-        let currentProduct: any = cart.find((p: any) => p.key == product.key)
+        let currentProduct: any = cart.find((p: any) => p.key === product.key)
         if (currentProduct) {
             currentProduct.total += product.selectedNumber || 1
         }

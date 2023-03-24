@@ -16,7 +16,7 @@ interface Props {
 }
 export function UserMenuComponent(props: Props) {
     const currentActionContextData = React.useContext<CurrentActionContext>(currentActionContext)
-    const isShow: boolean = currentActionContextData.currentAction == EventsName.OPEN_MENU
+    const isShow: boolean = currentActionContextData.currentAction === EventsName.OPEN_MENU
     const [cart, setCart] = useState<any[]>([])
     useEffect(() => {
         if (props.closed) {
